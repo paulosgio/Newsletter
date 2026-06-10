@@ -5,3 +5,14 @@ services:
       - "5672:5672"
       - "15672:15672"
     restart: always
+  
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+      - "5432:5432"
+    command: npm run dev
+
+  worker:
+    build: .
+    command: npm run worker
