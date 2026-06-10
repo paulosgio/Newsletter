@@ -7,12 +7,12 @@ services:
     restart: always
   
   api:
-    build: .
+    image: paulossrg/newsletter-api:1.0
     ports:
       - "8080:8080"
       - "5432:5432"
     command: npm run dev
 
   worker:
-    build: .
+    image: paulossrg/newsletter-api:1.0
     command: npm run worker
