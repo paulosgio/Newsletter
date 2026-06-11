@@ -10,9 +10,22 @@ services:
     image: paulossrg/newsletter-api:1.0
     ports:
       - "8080:8080"
-      - "5432:5432"
     command: npm run dev
 
   worker:
     image: paulossrg/newsletter-api:1.0
     command: npm run worker
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: psasf2004
+      POSTGRES_DB: newsletter
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
