@@ -16,11 +16,12 @@ export class AuthRepository {
         })
     }
 
-    async create(email: string, password: string) {
+    async create(email: string, password: string, role: "USER" | "ADMIN") {
         return await this.db.user.create({
             data: {
                 email,
                 password,
+                role
             }
         })
     }

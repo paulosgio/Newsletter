@@ -1,5 +1,5 @@
 import { AuthRepository } from "./auth.repository.js";
-import type { LoginDTO } from "./auth.schema.js";
+import type { LoginDTO, RegisterDTO } from "./auth.schema.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
@@ -54,7 +54,7 @@ export class AuthService {
         }
     }
 
-    async register({ email, password }: LoginDTO) {
+    async register({ email, password, role }: RegisterDTO) {
 
         const userExist = await this.repository.findByEmail(email)
 
@@ -63,11 +63,12 @@ export class AuthService {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
-        const newUser = await this.repository.create(email, hashedPassword)
+        const newUser = await this.repository.create(email, hashedPassword, role)
 
         return {
             id: newUser.id,
-            email: newUser.email
+            email: newUser.email,
+            role: newUser.role
         }
     }
 }
