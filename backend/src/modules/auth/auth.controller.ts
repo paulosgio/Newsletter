@@ -1,5 +1,5 @@
 import type { Request, Response } from "express"
-import { loginSchema } from "./auth.schema.js"
+import { loginSchema, registerSchema } from "./auth.schema.js"
 import { AuthService } from "./auth.service.js"
 import { AuthRepository } from "./auth.repository.js"
 import { prisma } from "../../database/prisma.js"
@@ -18,7 +18,7 @@ export class AuthController {
 
     async register(req: Request, res: Response) {
 
-        const data = loginSchema.parse(req.body)
+        const data = registerSchema.parse(req.body)
         const result = await service.register(data)
 
         return res.status(201).json(result)
