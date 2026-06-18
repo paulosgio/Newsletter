@@ -23,4 +23,12 @@ export class AuthController {
 
         return res.status(201).json(result)
     }
+
+    async refresh(req: Request, res: Response) {
+
+        const refreshToken = req.body.refreshToken
+        const result = await service.refreshService(refreshToken)
+
+        return res.status(201).json(result)
+    }
 }

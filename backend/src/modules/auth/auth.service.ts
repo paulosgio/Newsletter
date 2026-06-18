@@ -39,6 +39,7 @@ export class AuthService {
 
         const refreshToken = jwt.sign(
             {
+                id: account.id,
                 email: account.email,
                 role: account.role
             },
@@ -69,6 +70,35 @@ export class AuthService {
             id: newUser.id,
             email: newUser.email,
             role: newUser.role
+        }
+    }
+
+    async refreshService(refreshToken: string) {
+
+        const decoded = jwt.verify(
+            refreshToken,
+            process.env.SECRET_REFRESH_TOKEN!,
+        ) as jwt.JwtPayload
+
+        const user = await this.repository.findByEmail(decoded.email)
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        const accessToken = jwt.sign(
+            {
+                id: user.id,
+                email: user.email,
+                role: user.role
+            },
+            process.env.SECRET_ACCESS_TOKEN!,
+            {
+                expiresIn: "15m"
+            }
+        )
+        return {
+            accessToken
         }
     }
 }

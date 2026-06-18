@@ -7,5 +7,6 @@ const authController = new AuthController()
 
 authRoutes.post("/login", authController.login)
 authRoutes.post("/register", authController.register)
+authRoutes.post("/refresh", authController.refresh)
 
 export default authRoutes
